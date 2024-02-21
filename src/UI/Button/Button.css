@@ -1,0 +1,11 @@
+.submit{
+    padding: 5px;
+    color: rgb(0, 0, 0);
+    }
+    
+    .delete{
+    padding:4px;
+    margin-left: 10px;
+    background-color: rgb(68, 23, 29);
+    color: rgb(230, 228, 228);
+    }

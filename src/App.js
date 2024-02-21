@@ -1,25 +1,51 @@
-import logo from './logo.svg';
+ import { createContext, useEffect, useState } from 'react';
 import './App.css';
+import Forms from './components/Forms/Forms';
+import NewItems from './components/NewItems/NewItems';
+import React from 'react';
+
+
 
 function App() {
+
+const [orderArray,setorderArray] = useState([])
+
+  useEffect(()=>{
+    let lsData=localStorage.getItem('key')
+      if(lsData)
+    {
+      lsData=JSON.parse(lsData);
+      setorderArray(lsData);
+    }
+  },[])
+
+
+  function addOrder(data){
+  
+  if(localStorage.getItem('key'))
+  {
+    let lsData = localStorage.getItem('key')
+    lsData= JSON.parse(lsData);
+    lsData=[...lsData,data];
+    localStorage.setItem('key', JSON.stringify(lsData));
+  }
+  else{
+    localStorage.setItem('key',JSON.stringify([data]))
+  }
+  setorderArray((prevorderArray)=>{ return [...prevorderArray, data]})
+  }
+
+
+  function resetList(data){
+   setorderArray(data);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+<React.Fragment>
+ <Forms data={addOrder}></Forms>
+ <NewItems delete={resetList} data={orderArray}></NewItems>
+ </React.Fragment>
+  )
 }
 
 export default App;
